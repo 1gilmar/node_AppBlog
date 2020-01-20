@@ -7,7 +7,8 @@ const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const app = express()
-const admin = require("./routes/admin")
+const admin = require('./routes/admin')
+const path = require('path')
 
 //configuracao
     //bodyParse
@@ -15,11 +16,13 @@ const admin = require("./routes/admin")
     app.use(bodyParser.json());
 
     //handlebars
-    app.use('handlebars', handlebars({defaultLayout: 'main'}))
+    app.engine('handlebars', handlebars({defaultLayout: 'main'}))
     app.set('view engine', 'handlebars')
 
     //mongoose
 
+    //public
+    app.use(express.static(path.join(__dirname, "public")))
 
 //rotas
 app.use('/admin', admin)
@@ -27,5 +30,3 @@ app.use('/admin', admin)
 //outros
 const PORTA = 3001
 app.listen(PORTA, () => {console.log("Servidor rodando...")});
-
-//app.listen(3001, function(){console.log("servidor rodando.")});

@@ -3,7 +3,8 @@ const router = express.Router()
 
 
 router.get("/", (req, res) => {
-    res.send("Página principal")
+    //res.send("Pagina de postes")
+    res.render("admin/index")
 })
 
 router.get("/posts", (req, res) => {
