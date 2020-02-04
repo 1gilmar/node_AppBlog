@@ -18,7 +18,7 @@ const flash = require('connect-flash');
 //configuracao
     //sessao 
     app.use(session({
-        secret: "",
+        secret: "qualquercoisa",
         resave: false,
         saveUninitialized: true
     }))
@@ -32,7 +32,6 @@ const flash = require('connect-flash');
         res.locals.success_msg = req.flash("success_msg")
         res.locals.error_msg = req.flash("error_msg")
         next()
-
     })
 
     //bodyParse
