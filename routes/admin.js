@@ -11,7 +11,12 @@ router.get("/", (req, res) => {
 })
 
 router.get("/categorias", (req, res) => {
-    res.render("admin/categorias")
+    Categoria.find().sort({nome:'desc'}).then((categorias) => {
+        res.render("admin/categorias", {categorias: categorias})
+    }).catch((err) => {
+        req.flash("Erro ao mostrar as categorias")
+        res.redirect("/admin")
+    })
 })
 
 router.get("/categorias/add", (req, res) => {
