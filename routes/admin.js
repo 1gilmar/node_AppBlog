@@ -96,7 +96,11 @@ router.get("/postagens", (req, res) => {
 })
 
 router.get("/postagens/add", (req, res) => {
-    res.render("admin/addpostagens")
+    Categoria.find().then((categorias) =>{
+        res.render("admin/addpostagens", {categorias: categorias})
+    }).catch((erro) => {
+        req.flash("error_msg", "Erro ao bucar a categoria")
+    })
 })
 
 router.get("/teste", (req, res) => {
