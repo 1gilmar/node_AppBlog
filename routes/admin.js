@@ -91,6 +91,14 @@ router.post("/categorias/deletar", (req, res) => {
     })
 })
 
+router.get("/postagens", (req, res) => {
+    res.render("admin/postagens")
+})
+
+router.get("/postagens/add", (req, res) => {
+    res.render("admin/addpostagens")
+})
+
 router.get("/teste", (req, res) => {
     res.send("Testando url")
 })
