@@ -3,6 +3,5 @@
         "node_modules{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/cd298b88-2678-49ed-b05f-691796510f15/resourceGroups/gruposem/providers/Microsoft.Web/sites/nodejsbloggbs",
     "appService.deploySubpath": ""
 }
