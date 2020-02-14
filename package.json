@@ -1,0 +1,29 @@
+{
+  "name": "appblog",
+  "version": "1.0.0",
+  "description": "blog de teste",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.5.3",
+    "mongoose": "^5.8.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1gilmar/node_AppBlog.git"
+  },
+  "author": "jiraspiom",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1gilmar/node_AppBlog/issues"
+  },
+  "homepage": "https://github.com/1gilmar/node_AppBlog#readme"
+}
