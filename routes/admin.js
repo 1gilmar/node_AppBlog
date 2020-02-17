@@ -94,7 +94,10 @@ router.post("/categorias/deletar", (req, res) => {
 })
 
 router.get("/postagens", (req, res) => {
-    res.render("admin/postagens")
+    Postagem.find(() => {
+        res.render("admin/postagens", {postagens: "postagens"})
+    })
+    
 })
 
 router.get("/postagens/add", (req, res) => {
@@ -108,6 +111,10 @@ router.get("/postagens/add", (req, res) => {
 router.post("/postagens/nova", (req, res) =>{
     var erros = []
 
+    if(!req.body.titulo || typeof req.body.titulo == undefined || req.body.titulo == null){
+        erros.push({texto: "titulo invalido"})
+    }
+
     if(req.body.categoria == "0"){
         erros.push({texto: "Categoria invalida, registre uma categoria"})
     }
@@ -120,17 +127,16 @@ router.post("/postagens/nova", (req, res) =>{
             slug: req.body.slug,
             descricao: req.body.descricao,
             categoria: req.body.categoria,
-            conteudo: req.body.coteudo
+            conteudo: req.body.conteudo
         }
 
         new Postagem(novaPostagem).save().then(() =>{
             req.flash("success_msg", "Postagem criado com sucesso")
-            res.redirect("/admin/postagem")
+            res.redirect("/admin/postagens")
         }).catch((err) => {
             req.flash("error_msg", "Erro ao salvar postagem")
             res.redirect("/admin")
         })
-
     }
 
 })

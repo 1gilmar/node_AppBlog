@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
+const mongoose = require('mongoose');
+const Scheme = mongoose.Schema;
 
-const Postagem = new Schema({
+const ItemSchema = new Scheme({
     titulo:{
         type:String,
         required:true
@@ -19,7 +19,7 @@ const Postagem = new Schema({
         required:true
     },
     categoria:{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "categorias",
         required: true
     },
@@ -29,4 +29,4 @@ const Postagem = new Schema({
     }
 });
 //minha colecao no mongo db vai se chamar postagens
-mongoose.model("postagens", Postagem)
+mongoose.model("postagens", ItemSchema)
