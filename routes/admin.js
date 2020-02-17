@@ -94,17 +94,21 @@ router.post("/categorias/deletar", (req, res) => {
 })
 
 router.get("/postagens", (req, res) => {
-    Postagem.find(() => {
-        res.render("admin/postagens", {postagens: "postagens"})
+    //"catetoria" e o nome do campo que demos na tabela postagens
+    Postagem.find().populate("categoria").sort({dataCriacao: "desc"}).then((postagens) => {
+        res.render("admin/postagens", {postagens: postagens})
+    }).catch((erro) => {
+        req.flash("error_msg", "Erro ao buscar postagens")
+        res.redirect("/admin")
     })
-    
 })
 
 router.get("/postagens/add", (req, res) => {
     Categoria.find().then((categorias) =>{
         res.render("admin/addpostagens", {categorias: categorias})
     }).catch((erro) => {
-        req.flash("error_msg", "Erro ao bucar a categoria")
+        req.flash("error_msg", "Erro ao buscar a categoria")
+        res.redirect("/admin")
     })
 })
 
