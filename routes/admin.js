@@ -3,6 +3,8 @@ const router = express.Router()
 const mongoose = require("mongoose")
 require("../models/Categoria")
 const Categoria = mongoose.model("categorias")
+require("../models/Postagem")
+const Postagem = mongoose.model("postagens")
 
 
 router.get("/", (req, res) => {
@@ -101,6 +103,36 @@ router.get("/postagens/add", (req, res) => {
     }).catch((erro) => {
         req.flash("error_msg", "Erro ao bucar a categoria")
     })
+})
+
+router.post("/postagens/nova", (req, res) =>{
+    var erros = []
+
+    if(req.body.categoria == "0"){
+        erros.push({texto: "Categoria invalida, registre uma categoria"})
+    }
+
+    if (erros.length > 0 ){
+        res.render("admin/addpostagens", {erros: erros})
+    }else{
+        const novaPostagem = {
+            titulo: req.body.titulo,
+            slug: req.body.slug,
+            descricao: req.body.descricao,
+            categoria: req.body.categoria,
+            conteudo: req.body.coteudo
+        }
+
+        new Postagem(novaPostagem).save().then(() =>{
+            req.flash("success_msg", "Postagem criado com sucesso")
+            res.redirect("/admin/postagem")
+        }).catch((err) => {
+            req.flash("error_msg", "Erro ao salvar postagem")
+            res.redirect("/admin")
+        })
+
+    }
+
 })
 
 router.get("/teste", (req, res) => {

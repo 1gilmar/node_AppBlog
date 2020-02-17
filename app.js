@@ -12,7 +12,7 @@ const app = express()
 const admin = require('./routes/admin')
 const path = require('path')
 const session = require('express-session')
-const flash = require('connect-flash');
+const flash = require('connect-flash')
 
 //"function()" e mesma coisa que "() =>" ou seja, aerofunction.
 //configuracao
