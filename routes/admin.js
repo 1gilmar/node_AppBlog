@@ -145,6 +145,43 @@ router.post("/postagens/nova", (req, res) =>{
 
 })
 
+router.get("/postagens/edit/:id", (req, res) => {
+    Postagem.findOne({_id: req.params.id}).then((postagem) =>{
+        Categoria.find().then((categorias) =>{
+            
+            res.render("admin/editpostagens", {categorias: categorias, postagem: postagem})
+        
+        }).catch((errCategoria) =>{
+            req.flash("error_msg", "Erro ao lista as categorias")
+        })
+    }).catch((errPostagem) => {
+        req.flash("error_msg", "Erro ao buscar a postagem pelo id")
+        res.redirect("/admin/postagens")
+    })
+})
+
+router.post("/postagens/edit", (req, res) => {
+    Postagem.findOne({_id: req.body.id}).then((postagem) =>{
+        
+        postagem.titulo = req.body.titulo
+        postagem.slug = req.body.slug
+        postagem.descricao = req.body.descricao
+        postagem.categoria = req.body.categoria
+        postagem.conteudo = req.body.conteudo
+
+        postagem.save().then(()=>{
+            req.flash("success_msg", "Postagem atualizada com sucesso")
+            res.redirect("/admin/postagens")
+        }).catch((erro) =>{
+            req.flash("error_msg", "Erro ao atualizar a postagem")
+            res.redirect("/admin/categorias")
+        })
+
+    }).catch((erros) =>{
+        req.flash("error_msg", "Erro ao buscar a postabem pelo id da pagina hidden")
+    })
+})
+
 router.get("/teste", (req, res) => {
     res.send("Testando url")
 })
