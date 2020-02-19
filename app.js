@@ -57,7 +57,7 @@ const Postagens = mongoose.model("postagens")
 
 //rotas
 app.get("/", (req, res) => {
-    Postagens.find().sort({dataCriacao: "desc"}).then((postagens)=>{
+    Postagens.find().populate("categoria").sort({dataCriacao: "desc"}).then((postagens)=>{
         res.render("index", { postagens: postagens})
     }).catch((erro) =>{
         req.flash("error_msg", "Erro ao carregar as postagens")
@@ -68,8 +68,18 @@ app.get("/404", (req, res) =>{
     res.render("Erro 404")
 })
 
-app.get("/posts", (req, res) =>{
-    res.send("lista de posts")
+app.get("/postagem/:slug", (req, res) =>{
+    Postagens.findOne({slug: req.params.slug}).then((postagem) =>{
+        if(postagem){
+            res.render("postagem/index", {postagem: postagem})
+        }else{          
+            req.flash("error_msg", "essa postagem nao existe")
+            res.redirect("/")
+        }
+    }).catch((erro) =>{
+        req.flash("error_msg", "postagem nao achou o slug")
+        res.redirect("/")
+    })
 })
 app.use('/admin', admin)
 
