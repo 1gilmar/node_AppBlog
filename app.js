@@ -14,7 +14,10 @@ const path = require('path')
 const session = require('express-session')
 const flash = require('connect-flash')
 require("./models/Postagem")
-const Postagens = mongoose.model("postagens")
+const Postagem = mongoose.model("postagens")
+require("./models/Categoria")
+const Categoria = mongoose.model("categorias")
+
 
 //"function()" e mesma coisa que "() =>" ou seja, aerofunction.
 //configuracao
@@ -56,8 +59,10 @@ const Postagens = mongoose.model("postagens")
     app.use(express.static(path.join(__dirname, "public")))
 
 //rotas
+app.use('/admin', admin)
+
 app.get("/", (req, res) => {
-    Postagens.find().populate("categoria").sort({dataCriacao: "desc"}).then((postagens)=>{
+    Postagem.find().populate("categoria").sort({dataCriacao: "desc"}).then((postagens)=>{
         res.render("index", { postagens: postagens})
     }).catch((erro) =>{
         req.flash("error_msg", "Erro ao carregar as postagens")
@@ -69,7 +74,7 @@ app.get("/404", (req, res) =>{
 })
 
 app.get("/postagem/:slug", (req, res) =>{
-    Postagens.findOne({slug: req.params.slug}).then((postagem) =>{
+    Postagem.findOne({slug: req.params.slug}).then((postagem) =>{
         if(postagem){
             res.render("postagem/index", {postagem: postagem})
         }else{          
@@ -81,8 +86,32 @@ app.get("/postagem/:slug", (req, res) =>{
         res.redirect("/")
     })
 })
-app.use('/admin', admin)
 
+app.get("/categoria", (req, res) =>{
+    Categoria.find().then((categorias) => {
+        res.render("categoria/index", {categorias: categorias})
+    }).catch((erro) => {
+        req.flash("error_msg", "erro ao carregar a categoria")
+        res.redirect("/")
+    })  
+})
+
+app.get("/categoria/:slug", (req, res) => {
+    Categoria.findOne({slug: req.params.slug}).then((categoria)=>{
+        if(categoria){
+            Postagem.find({categoria: categoria._id}).then((postagens)=>{
+               res.render("categoria/postagens", {postagens: postagens, categoria: categoria})
+            })
+
+        }else{
+            req.flash("error_msg", "essa categoria não existe")
+            res.redirect("/")
+        }
+    }).catch((erro)=>{
+        req.flash("error_msg", "erro ao carregar o slug")
+        res.redirect("/")
+    })
+})
 
 //outros
 const PORTA = 3001
