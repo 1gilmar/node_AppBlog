@@ -179,7 +179,22 @@ router.post("/postagens/edit", (req, res) => {
 
     }).catch((erros) =>{
         req.flash("error_msg", "Erro ao buscar a postabem pelo id da pagina hidden")
+        res.redirect("/admin/categorias")
     })
+})
+
+router.post("/postagens/deletar", (req, res) => {
+    Postagem.remove({_id: req.body.id}).then(() =>{
+        req.flash("success_msg", "Postagem deletado com sucesso")
+        res.redirect("/admin/postagens")
+    }).catch((erro) => {
+        req.flash("error_msg", "Erro ao deletar postagem")
+        res.redirect("/admin/postagens")
+    })
+})
+
+router.get("/postagens/deletarget/:id", (req, res) => {
+    Postagem.remove({_id: req.params.id})
 })
 
 router.get("/teste", (req, res) => {

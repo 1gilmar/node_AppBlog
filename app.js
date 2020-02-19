@@ -13,6 +13,8 @@ const admin = require('./routes/admin')
 const path = require('path')
 const session = require('express-session')
 const flash = require('connect-flash')
+require("./models/Postagem")
+const Postagens = mongoose.model("postagens")
 
 //"function()" e mesma coisa que "() =>" ou seja, aerofunction.
 //configuracao
@@ -54,7 +56,23 @@ const flash = require('connect-flash')
     app.use(express.static(path.join(__dirname, "public")))
 
 //rotas
+app.get("/", (req, res) => {
+    Postagens.find().sort({dataCriacao: "desc"}).then((postagens)=>{
+        res.render("index", { postagens: postagens})
+    }).catch((erro) =>{
+        req.flash("error_msg", "Erro ao carregar as postagens")
+        res.render("/404")
+    })
+})
+app.get("/404", (req, res) =>{
+    res.render("Erro 404")
+})
+
+app.get("/posts", (req, res) =>{
+    res.send("lista de posts")
+})
 app.use('/admin', admin)
+
 
 //outros
 const PORTA = 3001
