@@ -4,12 +4,14 @@
 //npm install --save mongoose
 //npm install --save express-session
 //npm install --save connect-flash
+//npm install --save bcryptjs
 const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const app = express()
 const admin = require('./routes/admin')
+const usuario = require("./routes/usuario")
 const path = require('path')
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -17,7 +19,6 @@ require("./models/Postagem")
 const Postagem = mongoose.model("postagens")
 require("./models/Categoria")
 const Categoria = mongoose.model("categorias")
-
 
 //"function()" e mesma coisa que "() =>" ou seja, aerofunction.
 //configuracao
@@ -60,6 +61,7 @@ const Categoria = mongoose.model("categorias")
 
 //rotas
 app.use('/admin', admin)
+app.use('/usuario', usuario)
 
 app.get("/", (req, res) => {
     Postagem.find().populate("categoria").sort({dataCriacao: "desc"}).then((postagens)=>{
