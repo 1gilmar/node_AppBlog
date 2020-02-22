@@ -26,6 +26,8 @@ const Categoria = mongoose.model("categorias")
 const passport = require("passport")
 require("./config/auth")(passport) //podemos usar o parametro passport por que o mesmo esta no export do arquivo auth, logo depois do igual.
 
+const db = require("./config/db")
+
 //"function()" e mesma coisa que "() =>" ou seja, aerofunction.
 //configuracao
     //sessao 
@@ -61,7 +63,7 @@ require("./config/auth")(passport) //podemos usar o parametro passport por que o
 
     //mongoose
     mongoose.Promise = global.Promise;
-    mongoose.connect("mongodb://localhost:27017/blogapp").then(() => {
+    mongoose.connect(db.mongoURL).then(() => {
         console.log("Conectado ao mongo db")
     }).catch((err) => {
         console.log("Erro ao conectar ao mongo db - erro: " + err)
