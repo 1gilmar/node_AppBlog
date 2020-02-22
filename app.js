@@ -23,6 +23,9 @@ const Postagem = mongoose.model("postagens")
 require("./models/Categoria")
 const Categoria = mongoose.model("categorias")
 
+const passport = require("passport")
+require("./config/auth")(passport) //podemos usar o parametro passport por que o mesmo esta no export do arquivo auth, logo depois do igual.
+
 //"function()" e mesma coisa que "() =>" ou seja, aerofunction.
 //configuracao
     //sessao 
@@ -31,6 +34,9 @@ const Categoria = mongoose.model("categorias")
         resave: false,
         saveUninitialized: true
     }))
+
+    app.use(passport.initialize())
+    app.use(passport.session())
     
     //sempre deve ser depois da session
     app.use(flash())
