@@ -46,6 +46,7 @@ require("./config/auth")(passport) //podemos usar o parametro passport por que o
         //criando variavel global
         res.locals.success_msg = req.flash("success_msg")
         res.locals.error_msg = req.flash("error_msg")
+        res.locals.error = req.flash("error")
         next()
     })
 

@@ -2,12 +2,15 @@
     <div class="card-body">
         <h4 class="card-title">Login</h4>
         <p class="card-text">Seja bem vindo ao blog</p>
-        <form action="" method="POST" class="form-signin">
-            <label for="usuario">Usuario:</label>
-            <input type="text" name="usuario" id="usuario_id" class="form-control" required>
+        <form action="/usuario/login" method="POST" class="form-signin">
+            <label for="email">Email:</label>
+            <input type="email" name="email" class="form-control" required>
+            
             <label for="senha">Senha:</label>
-            <input type="password" name="password" id="password_id" class="form-control" required>
+            <input type="password" name="senha" class="form-control" required>
+            
             <button class="btn btn-primary mt-3">Entrar...</button>
+            
         </form>
     </div>
 </div>
