@@ -126,6 +126,6 @@ app.get("/categoria/:slug", (req, res) => {
     })
 })
 
-//outros
-const PORTA = 3001
+//outros process.env.port e para pegar a porta aleatoria do heroku casa contrario pega a 3001
+const PORTA = process.env.PORT || 3001
 app.listen(PORTA, () => {console.log("Servidor rodando...")});

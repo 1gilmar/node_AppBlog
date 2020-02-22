@@ -21,7 +21,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect ./app.js"
+    "start": "node add.js",
+    "dev": "nodemon --inspect ./app.js"
   },
   "repository": {
     "type": "git",
