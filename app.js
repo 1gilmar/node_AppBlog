@@ -64,6 +64,7 @@ const db = require("./config/db")
     //mongoose
     mongoose.Promise = global.Promise;
     mongoose.connect(db.mongoURL, {useNewUrlParser: true}).then(() => {
+    // mongoose.connect("mongodb+srv://usuario:5HboYDJVrtkpEIhJ@cluster0-jzfpn.gcp.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser: true}).then(() => {
         console.log("Conectado ao mongo db")
     }).catch((err) => {
         console.log("Erro ao conectar ao mongo db - erro: " + err)
